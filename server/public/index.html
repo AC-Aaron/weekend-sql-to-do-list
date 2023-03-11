@@ -10,10 +10,31 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <h1>Tasks</h1>
-    <div>
-        <input type="text" placeholder="new task">
-    </div>
+  <div id="taskInputDiv" class="header">
+    <h2>My To Do List</h2>
+    <input type="text" id="taskInput" placeholder="new task">
+    <button class="Buttons" id="addTaskButton">Add Task</button>
+  </div>
     
+  <div id="tableDiv">
+    <table>
+      <thead>
+        <tr class="table_header">
+            <th id="tasksHeader">Tasks</th>
+            <!-- <th id="notesHeader">Notes</th> -->
+            <th id="completeHeader">Comeplete</th>
+            <th id="deleteHeader">DELETE</th>
+        </tr>
+      </thead>
+        <tbody id="tableContent">
+
+        </tbody>
+        <!-- <tr id="tasks_list">
+            <td></td>
+        </tr> -->
+        
+    </table>
+  </div>
+  
 </body>
 </html>

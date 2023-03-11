@@ -1,0 +1,28 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: 10px ;
+    font-weight: bold;
+    background-color: bisque;
+}
+taskInputDiv {
+
+}
+body {
+    background-color: aqua;
+}
+
+table{
+    width: 100%;
+}
+#tasksHeader {
+    width: 66%;
+}
+/* #notesHeader {
+    width: 33%;
+} */
+#completeHeader {
+    width: 15%;
+}
+#deleteHeader {
+    width: 15%;
+}
