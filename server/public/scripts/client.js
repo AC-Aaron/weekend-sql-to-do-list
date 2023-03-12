@@ -113,8 +113,9 @@ function deleteTask() {
     .then(function(response){
       console.log('Deleted task:',idToDelete);
       getKoalas();
-    })
+    }) 
     .catch( function(error) {
       alert('Error deleting koala from database', error);
     })
+    getTasks();
   }
