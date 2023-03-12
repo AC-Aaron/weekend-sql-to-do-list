@@ -3,6 +3,9 @@ $(document).ready(onReady);
 function onReady(){
     //here are where the event listeners will go:
     $('#addTaskButton').on('click', addTask);
+    $('#tableContent').on('click', '#markCompleteButton', markComplete);// this is for PUT
+    $('#tableContent').on('click', '#deleteButton', deleteTask); //this is for delete
+    getTasks();
 
 };
 console.log('client file is working')
@@ -49,11 +52,15 @@ function getTasks(){
 //function to mark tasks as complete on DOM
 function markComplete(){
     console.log('in mark complete:');
-    const idToMarkReady = $(this).parent().data().id;
+    const idToMarkComplete = $(this).parent().data().id;
     
     $.ajax({
         method:'PUT',
-        url:``
+        url:`/tasks/markComplete/${idToMarkComplete}`
+    }).then((result) => {
+        getTasks();
+    }).catch((error) => {
+        alert('error in mark clientside mark complete')
     })
 }
 
@@ -66,8 +73,8 @@ function render(object){
         
         $('#tableContent').append(`
         <tr data-id=${object[i].id}>
-            <td>${object.task}</td>
-            <td>${object.complete}</td>
+            <td>${object[i].task}</td>
+            <td>${object[i].complete}</td>
             <td id="markCompleteButton"><button id="completeButton">Task Complete</button></td>
             <td><button id="deleteButton">Delete Task</button></td>
         </tr>
@@ -75,3 +82,39 @@ function render(object){
         
     }
 }
+
+//PUT
+// function markComplete(){
+//     console.log('in mark complete function');
+//     const idToMarkComplete = $(this).parent().parent().data().id;
+
+//     $.ajax({
+//         method:'PUT',
+//         url:`/tasks/markComplete/${idToMarkComplete}`
+//     }).then((result) => {
+//        getTasks();
+//     }).catch((error) => {
+//         console.log('error in markcomplete')
+//     })
+// }
+
+//DELETE 
+function deleteTask() {
+    console.log('inside deleteButton', $(this).parent(),"P2", 
+    $(this).parent().parent(), "P2Data", $(this).parent().parent().data() );
+    const idToDelete = $(this).parent().parent().data().id;
+    console.log("ID to delete:", idToDelete);
+
+
+    $.ajax({
+      method: 'DELETE',
+      url: `/tasks/delete/${idToDelete}`
+    })
+    .then(function(response){
+      console.log('Deleted task:',idToDelete);
+      getKoalas();
+    })
+    .catch( function(error) {
+      alert('Error deleting koala from database', error);
+    })
+  }

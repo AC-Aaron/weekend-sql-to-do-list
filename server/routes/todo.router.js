@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
     pool.query(queryText)
         .then((result) => {
-            console.log('in poo.query', result.rows);
+            console.log('in pool.query', result.rows);
             res.send(result.rows);
         })
         .catch((error) =>{
@@ -39,6 +39,52 @@ router.post('/', (req, res) =>{
         .catch((error) => {
             console.log('error in router.post', queryText, error)
             res.sendStatus(500);
+        })
+})
+
+//PUT to complete
+router.put('/comeplete/:id', (req, res) => { 
+    const taskId = req.params.id;
+    console.log('id of task to complete', taskId)
+    let queryText =`UPDATE "tasks" SET "complete" = 'TRUE' WHERE "id" =$1`;
+
+    pool.query(queryText, [taskId])
+        .then((results) => {
+            console.log('in route put');
+            res.sendStatus(200);
+        }).catch((error) => {
+            console.log('error in route put', queryText, error);
+            res.sendStatus(500);
+        })
+})
+//PUT to uncomplete
+// router.put('/uncomeplete/:id', (req, res) => { 
+//     const taskId = req.params.id;
+//     console.log('id of task to complete', taskId)
+//     let queryText =`UPDATE "tasks" SET "complete" = 'FALSE' WHERE "id" =$1`;
+
+//     pool.query(queryText, [taskId])
+//         .then((results) => {
+//             console.log('in route put');
+//             res.sendStatus(200);
+//         }).catch((error) => {
+//             console.log('error in route put', queryText, error);
+//             res.sendStatus(500);
+//         })
+// })
+
+//DELETE
+router.delete('/delete/:id', (req, res) => {
+    let reqId = req.params.id;
+    console.log('Delete request for id', reqId);
+    let sqlText = 'DELETE FROM "tasks" WHERE id=$1;';
+    pool.query(sqlText, [reqId])
+        .then((result) => {
+            console.log('task deleted');
+        } )
+        .catch((error) => {
+            console.log(`Error making database query ${sqlText}`, error);
+            res.sendStatus(500); //server response
         })
 })
 
